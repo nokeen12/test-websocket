@@ -8,15 +8,23 @@
 </head>
 <body>
     Client1
-    <button>Send Message</button>
+    <button onclick="sendMessage()">Send Message</button>
 </body>
 <script>
     // Create WebSocket connection.
     const socket = new WebSocket('ws://localhost:5000');
 
     // Connection opened
-    socket.addEventListener('open', (event) => {
+    socket.addEventListener('open', (e) => {
         console.log('Connected to WS Server')
     });
+    
+    socket.addEventListener('message', (e) => {
+        console.log('Message from server ', event.data);
+    })
+
+    function sendMessage(){
+        socket.send('Hello From Client1!');
+    }
 </script>
 </html>
