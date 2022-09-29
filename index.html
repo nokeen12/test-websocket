@@ -15,12 +15,12 @@
     const socket = new WebSocket('ws://localhost:5000');
 
     // Connection opened
-    socket.addEventListener('open', (e) => {
+    socket.addEventListener('open', () => {
         console.log('Connected to WS Server')
     });
     
     socket.addEventListener('message', (e) => {
-        console.log('Message from server ', event.data);
+        console.log('Message from server ', e.data);
     })
 
     function sendMessage(){

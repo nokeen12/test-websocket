@@ -9,10 +9,15 @@ wss.on('connection', function connection(ws){
     console.log('A new client Connected!')
     ws.send('Welcome New Client!');
     
-    ws.on('message', function incoming(message){
-        console.log('received %s', message)
-        ws.send('Got your message, its: ', message);
-    });    
+    ws.on('message', function incoming(data, isBinary){
+        console.log('received %s', data)
+        
+        wss.clients.forEach((client)=>{
+            if(client !== ws && client.readyState === WebSocket.OPEN){
+                client.send(data, { binary: isBinary });
+            }
+        })
+    }); 
 });
 
 app.get('/', (req,res) => res.send('Server running'))
